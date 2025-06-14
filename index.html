@@ -1,0 +1,95 @@
+<html manifest="cache.appcache">
+<!-- <html manifest="cache.appcache"> -->
+
+<head>
+    <meta charset="UTF-8">
+    <title> dar3a store  </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<!-- body is set up as three rows: auto 1fr auto -->
+<body>
+    <!-- Row 1 -->
+    <div class="p-2">
+        <h1 class="text-center">شكرا لاختيارك درعة ستور</h1>
+        <div id="status-container" style="text-align: center; margin-top: 10px;">
+        <p style="text-align: center"><img src="img/PS_Loaders.png" width="128" height="101" alt=""><img id="statusImage" src="offline.png" width="32" height="32" alt="Connection Status" /></p>
+        </div>
+        <p class="text-center" id="top-bar-text">نظام جهازك : <span class="fw-bold" id="current-fw"></span></p>		
+        <!-- This is absolute positioned to the body-->
+        <div id="toast-container"></div>
+    </div>
+    <!-- Row 2 -->
+    <div id="main-content">
+        <div id="pre-jb-view" class="d-flex align-items-center justify-content-center flex-direction-column selected">
+
+            <a tabindex="0" class="btn fw-bold" id="run-jb" onclick="run()"><img src="img/01.png" width="64" height="64" alt=""><br>فتح القفل</a>
+            <a tabindex="0" class="btn" style="padding: 0.5rem 2rem; font-size: 1rem;" id="run-wk-only"
+                onclick="run(true)"><img src="img/02.png" width="64" height="64" alt=""><br>الاعدادات</a>
+        </div>
+
+        <div id="console-view">
+            <div id="console" class="log"></div>
+        </div>
+
+        <div id="payloads-view">
+        </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="position-relative text-center p-2 mb-2">
+        <h3 class="text-secondary mt-2">
+            <a ="https://github.com/shahrilnet">زورونا عشان تنورونا</a>
+            <br />
+            <a ="https://x.com/znullptr">موقنا امدرمان الثورة الحارة ال13 جوار صيدلية شوامخ جنوب محطة حميدان وشمال الرومي قصاد مستشفى سعد رشوان</a>
+         <br>
+            <a ="https://discord.gg/kbrzGuH3F6">باش مهندس مهاب محمود</a>
+        </h3>
+
+        <div class="position-absolute d-flex align-items-center bottom-0 left-0 m-4">
+            <div class="l2-redirect-box">L2</div>
+            <span class="ml-2">اعادة توجية</span>
+			    </div>
+			
+			<div class="position-absolute d-flex align-items-center bottom-0 right-0 m-4">
+            <span class="ml-2">للتواصل : 0922265656 - 0123737909</span>
+			
+
+        </div>
+    </div>
+    
+    <script src="int64.js"></script>
+    <script src="rop.js"></script>
+    <script src="main.js"></script>
+    <script src="umtx2.js"></script>
+    <script src="custom_host_stuff.js"></script>
+    <script src="syscalls.js"></script>
+    <script type="module" src="psfree/psfree.js"></script>
+    <script src="payload_map.js"></script>
+
+    <script>
+        addEventListener('unhandledrejection', (event) => {
+            const reason = event.reason;
+            // We log the line and column numbers as well since some exceptions (like
+            // SyntaxError) do not show it in the stack trace.
+            alert(
+                `${reason}\n`
+                + `${reason.sourceURL}:${reason.line}:${reason.column}\n`
+                + `${reason.stack}`
+            );
+            throw reason;
+        });
+        document.getElementById("current-fw").innerHTML = fw_str;
+        registerAppCacheEventHandlers();
+        registerL2ButtonHandler();
+        window.onload = function () {
+            let autoload = sessionStorage.getItem(SESSIONSTORE_ON_LOAD_AUTORUN_KEY);
+            if (autoload) {
+                run(autoload == "wkonly", false);
+            }
+        };
+    </script>
+</body>
+
+</html>
